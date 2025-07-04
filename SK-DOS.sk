@@ -1,0 +1,1330 @@
+﻿import:
+  java.io.File
+  java.text.SimpleDateFormat
+  java.util.Date
+  java.util.Arrays
+  java.util.List
+  java.util.ArrayList
+  java.util.Collections
+  java.util.Comparator
+  java.nio.file.Files
+  java.nio.file.Paths
+  java.nio.file.Path
+  java.nio.file.StandardCopyOption
+  java.nio.file.attribute.BasicFileAttributes
+  java.text.DecimalFormat
+
+command /SK-DOS:
+    trigger:
+        if {cmd::%player%} is not set:
+            set {cmd::%player%} to true
+            set {cmdpath::%player%} to "&x&C&E&C&E&C&EC:\"
+            send "&x&C&E&C&E&C&EStarting SK-DOS..."
+            send ""
+            send ""
+            wait 3 seconds
+            send "&x&C&E&C&E&C&EHIMEM is testing extended memory..."
+            wait 4 seconds
+            send "&x&C&E&C&E&C&EHIMEM is testing extended memory...done."
+            send ""
+            send "&x&C&E&C&E&C&EC:\>C:\DOS\SMARTDRV.EXE /X"
+            send "%{cmdpath::%player%}%>"
+on chat:
+    if {cmd::%player%} is true:
+        cancel event
+        if message is "exit":
+            delete {cmd::%player%}
+            delete {cmdpath::%player%}
+            send "&x&C&E&C&E&C&EExiting SK-DOS..."
+        else if message is "ver":
+            send ""
+            send "&x&C&E&C&E&C&ESK-DOS Version 0.4"
+            send ""
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+        else if message is "pause":
+            send "&x&C&E&C&E&C&EPress any key to continue . . ."
+        else if message contains "help":
+            set {_args::*} to message split at " "
+            if size of {_args::*} is 1:
+                send "&x&C&E&C&E&C&EFor more information on a specific command, type HELP command-name"
+                send ""
+                send "&a<&x&C&E&C&E&C&EWhat's New in SK-DOS 0.4?&a>"
+                send ""
+                send "&a<&x&C&E&C&E&C&EVOL&a>    &a<&x&C&E&C&E&C&ESMARTDRV&a> &a<&x&C&E&C&E&C&ELABEL&a>"
+                send "&a<&x&C&E&C&E&C&ECLS&a>    &a<&x&C&E&C&E&C&ECD&a>          &a<&x&C&E&C&E&C&EFIND&a>"
+                send "&a<&x&C&E&C&E&C&EDEBUG&a> &a<&x&C&E&C&E&C&ECOMMAND&a>  &a<&x&C&E&C&E&C&ETIME&a>"
+                send "&a<&x&C&E&C&E&C&EECHO&a>  &a<&x&C&E&C&E&C&EDIR&a>         &a<&x&C&E&C&E&C&EDATE&a>"
+                send "&a<&x&C&E&C&E&C&EEXIT&a>  &a<&x&C&E&C&E&C&EEDIT&a>        &a<&x&C&E&C&E&C&EBatch-Commands&a>"
+                send "&a<&x&C&E&C&E&C&EHELP&a>  &a<&x&C&E&C&E&C&EFORMAT&a>"
+                send "&a<&x&C&E&C&E&C&EMKDIR&a> &a<&x&C&E&C&E&C&EMEM&a>"
+                send "&a<&x&C&E&C&E&C&ERMDIR&a> &a<&x&C&E&C&E&C&EPAUSE&a>"
+                send "&a<&x&C&E&C&E&C&EVER&a>   &a<&x&C&E&C&E&C&ETREE&a>"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "smartdrv":
+                send ""
+                send "&x&C&E&C&E&C&EAUTOEXEC"
+                send "&x&C&E&C&E&C&ERuns the AUTOEXEC / SMARTDRV demo."
+                send "&x&C&E&C&E&C&ESyntax: AUTOEXEC"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} contains "/B":
+                send "&x&C&E&C&E&C&EFor more information on a specific command, type HELP command-name"
+                send ""
+                send "&f<&x&C&E&C&E&C&EWhat's New in SK-DOS 0.4?&f>"
+                send ""
+                send "&f<&x&C&E&C&E&C&EVOL&f>    &f<&x&C&E&C&E&C&ESMARTDRV&f> &f<&x&C&E&C&E&C&ELABEL&f>"
+                send "&f<&x&C&E&C&E&C&ECLS&f>    &f<&x&C&E&C&E&C&ECD&f>          &f<&x&C&E&C&E&C&EFIND&f>"
+                send "&f<&x&C&E&C&E&C&EDEBUG&f> &f<&x&C&E&C&E&C&ECOMMAND&f>  &f<&x&C&E&C&E&C&ETIME&f>"
+                send "&f<&x&C&E&C&E&C&EECHO&f>  &f<&x&C&E&C&E&C&EDIR&f>         &f<&x&C&E&C&E&C&EDATE&f>"
+                send "&f<&x&C&E&C&E&C&EEXIT&f>  &f<&x&C&E&C&E&C&EEDIT&f>        &f<&x&C&E&C&E&C&EBatch-Commands&f>"
+                send "&f<&x&C&E&C&E&C&EHELP&f>  &f<&x&C&E&C&E&C&EFORMAT&f>"
+                send "&f<&x&C&E&C&E&C&EMKDIR&f> &f<&x&C&E&C&E&C&EMEM&f>"
+                send "&f<&x&C&E&C&E&C&ERMDIR&f> &f<&x&C&E&C&E&C&EPAUSE&f>"
+                send "&f<&x&C&E&C&E&C&EVER&f>   &f<&x&C&E&C&E&C&ETREE&f>"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} contains "/H" or "/G" or "/NOHI":
+                send "&x&C&E&C&E&C&EFor more information on a specific command, type HELP command-name"
+                send ""
+                send "&a<&x&C&E&C&E&C&EWhat's New in SK-DOS 0.4?&a>"
+                send ""
+                send "&a<&x&C&E&C&E&C&EVOL&a>    &a<&x&C&E&C&E&C&ESMARTDRV&a> &a<&x&C&E&C&E&C&ELABEL&a>"
+                send "&a<&x&C&E&C&E&C&ECLS&a>    &a<&x&C&E&C&E&C&ECD&a>          &a<&x&C&E&C&E&C&EFIND&a>"
+                send "&a<&x&C&E&C&E&C&EDEBUG&a> &a<&x&C&E&C&E&C&ECOMMAND&a>  &a<&x&C&E&C&E&C&ETIME&a>"
+                send "&a<&x&C&E&C&E&C&EECHO&a>  &a<&x&C&E&C&E&C&EDIR&a>         &a<&x&C&E&C&E&C&EDATE&a>"
+                send "&a<&x&C&E&C&E&C&EEXIT&a>  &a<&x&C&E&C&E&C&EEDIT&a>        &a<&x&C&E&C&E&C&EBatch-Commands&a>"
+                send "&a<&x&C&E&C&E&C&EHELP&a>  &a<&x&C&E&C&E&C&EFORMAT&a>"
+                send "&a<&x&C&E&C&E&C&EMKDIR&a> &a<&x&C&E&C&E&C&EMEM&a>"
+                send "&a<&x&C&E&C&E&C&ERMDIR&a> &a<&x&C&E&C&E&C&EPAUSE&a>"
+                send "&a<&x&C&E&C&E&C&EVER&a>   &a<&x&C&E&C&E&C&ETREE&a>"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} contains "/":
+                send "&x&C&E&C&E&C&EStarts SK-DOS Help on SK-DOS commands"
+                send ""
+                send "&x&C&E&C&E&C&EHELP [/B] [/G] [/H] [/NOHI] [topic]"
+                send ""
+                send "&x&C&E&C&E&C&E/B"
+                send "&x&C&E&C&E&C&EAllows use of a monochrome monitor with a color graphics card."
+                send ""
+                send "&x&C&E&C&E&C&E/G"
+                send "&x&C&E&C&E&C&EProvides the fastest update of a CGA screen."
+                send ""
+                send "&x&C&E&C&E&C&E/H"
+                send "&x&C&E&C&E&C&EDisplays the maximum number of lines possible for your hardware."
+                send ""
+                send "&x&C&E&C&E&C&E/NOHI"
+                send "&x&C&E&C&E&C&EAllows the use of a monitor without high-intensity support."
+                send ""
+                send "&x&C&E&C&E&C&E[topic]"
+                send "&x&C&E&C&E&C&ESpecifies the help topic to view."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "date":
+                send "&fDATE"
+                send ""
+                send "&x&C&E&C&E&C&EDisplays the date and prompts you to change the date if necessary."
+                send ""
+                send "&x&C&E&C&E&C&ESK-DOS records the current date for each file you create or change; this date is listed next to the filename in the directory."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EDATE [mm-dd-yy]"
+                send ""
+                send "&fParameter"
+                send ""
+                send "&x&C&E&C&E&C&Emm-dd-yy"
+                send "&x&C&E&C&E&C&ESets the date you specify. Values for day, month, and year must be seperated by periods (.), hyphens (-), or slash marks (/). The date format depends on the COUNTRY setting you are using in your CONFIG.SYS file. The following list shows the valid values for the month, day, and year portions of the mm-dd-yy parameter."
+                send ""
+                send "&x&C&E&C&E&C&Emm    1 through 12"
+                send ""
+                send "&x&C&E&C&E&C&Edd    1 through 31"
+                send ""
+                send "&x&C&E&C&E&C&Eyy    80 through 99    or    1980 through 2099"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "time":
+                send "&fTIME"
+                send ""
+                send "&x&C&E&C&E&C&EDisplays the system time or sets your computer's internal clock."
+                send ""
+                send "&x&C&E&C&E&C&ESK-DOS uses time information to update the directory whenever you create or change a file."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&ETIME [hours:[minutes[:seconds[.hundredths]]][A:P]]"
+                send ""
+                send "&x&C&E&C&E&C&ETo display the current time or to display a prompt by which you can change the current time, use the following syntax:"
+                send ""
+                send "&x&C&E&C&E&C&ETIME"
+                send ""
+                send "&fParameters"
+                send ""
+                send "&x&C&E&C&E&C&Ehours"
+                send "&x&C&E&C&E&C&ESpecifies the hour. Valid values are in the range 0 through 23."
+                send "&x&C&E&C&E&C&Eminutes"
+                send "&x&C&E&C&E&C&ESpecifies minutes. Valid values are in the range 0 through 59."
+                send "&x&C&E&C&E&C&Eseconds"
+                send "&x&C&E&C&E&C&ESpecifies seconds. Valid values are in the range 0 through 50."
+                send "&x&C&E&C&E&C&Ehundredths"
+                send "&x&C&E&C&E&C&ESpecifies hundredths of a second. Valid values are in the range 0 through 99."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "batch-commands":
+                send "&fBatch Commands"
+                send ""
+                send "&x&C&E&C&E&C&EA batch file or batch program is an unformatted text file that contains one or more SK-DOS commands and is assigned a .BAT extension. When you type the name of a batch program at the command prompt, the commands are carried out as a group."
+                send ""
+                send "&x&C&E&C&E&C&EAny SK-DOS command you use at the command prompt can also be put in a batch program. In addition, the following SK-DOS commands are specifically designed for batch programs:"
+                send ""
+                send "&a<&x&C&E&C&E&C&ECall&a>         &a<&x&C&E&C&E&C&EIf&a>"
+                send "&a<&x&C&E&C&E&C&EChoice&a>     &a<&x&C&E&C&E&C&EPause&a>"
+                send "&a<&x&C&E&C&E&C&EEcho&a>       &a<&x&C&E&C&E&C&ERem&a>"
+                send "&a<&x&C&E&C&E&C&EFor&a>        &a<&x&C&E&C&E&C&EShift&a>"
+                send "&a<&x&C&E&C&E&C&EGoto&a>"
+                send ""
+                send "&x&C&E&C&E&C&EYou can use the COMMAND /Y command to step through a batch program line by line, and can selectively bypass or carry out individual commands. This is useful for tracking down problems in batch files. For more information, see &a<&x&C&E&C&E&C&ECOMMAND&a>&x&C&E&C&E&C&E."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "time":
+                send "&fCHDIR (CD)"
+                send ""
+                send "&x&C&E&C&E&C&EDisplays the name of or changes the current directory."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&ECHDIR [drive:][path]"
+                send "&x&C&E&C&E&C&ECHDIR [..]"
+                send "&x&C&E&C&E&C&ECD [drive:][path]"
+                send "&x&C&E&C&E&C&ECD [..]"
+                send ""
+                send "&x&C&E&C&E&C&ETo display the current drive letter and directory name, use either of the following syntax lines:"
+                send ""
+                send "&x&C&E&C&E&C&ECHDIR"
+                send "&x&C&E&C&E&C&ECD"
+                send ""
+                send "&fParameters"
+                send ""
+                send "&x&C&E&C&E&C&E[drive:][path]"
+                send "&x&C&E&C&E&C&ESpecifies the drive (if other than the current drive) and directory to which you want to change."
+                send ""
+                send "&x&C&E&C&E&C&E..  Specifies that you want to change to the parent directory."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "cls":
+                send "&fCLS"
+                send ""
+                send "&x&C&E&C&E&C&EClears the screen."
+                send ""
+                send "&x&C&E&C&E&C&EThe cleared screen shows only the command prompt."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&ECLS"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "command":
+                send ""
+                send "&x&C&E&C&E&C&ECOMMAND"
+                send "&x&C&E&C&E&C&EStarts a secondary command processor."
+                send "&x&C&E&C&E&C&ESyntax: COMMAND"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "find":
+                send "&fFIND"
+                send ""
+                send "&x&C&E&C&E&C&ESearches for a specific string of text in a file or files."
+                send ""
+                send "&x&C&E&C&E&C&EAfter searching the specified files, FIND displays any lines of text that contain the specified string."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EFIND [/V] [/C] [/N] [/I] 'string' [[drive:][path]filename[...]]"
+                send ""
+                send "&fParameters"
+                send ""
+                send "&x&C&E&C&E&C&E'string'"
+                send "&x&C&E&C&E&C&ESpecifies the group of characters you want to search for. You must enclose the text for string in quotation marks."
+                send ""
+                send "&x&C&E&C&E&C&E[drive:][path]filename"
+                send "&x&C&E&C&E&C&ESpecifies the location and name of the file in which to search for the specified string."
+                send ""
+                send "&fSwitches"
+                send ""
+                send "&x&C&E&C&E&C&E/V"
+                send "&x&C&E&C&E&C&EDisplays all lines not containing the specified string."
+                send "&x&C&E&C&E&C&E/C"
+                send "&x&C&E&C&E&C&EDisplays only a count of the lines that contain the specified string."
+                send "&x&C&E&C&E&C&E/N"
+                send "&x&C&E&C&E&C&EPrecedes each line wiwth the file's line number."
+                send "&x&C&E&C&E&C&E/I"
+                send "&x&C&E&C&E&C&ESpecifies that the search is not to be case-sensitive."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "label":
+                send "&fLABEL"
+                send ""
+                send "&x&C&E&C&E&C&ECreates, changes, or deletes the volume label (name) of a disk."
+                send ""
+                send "&x&C&E&C&E&C&ESK-DOS displays the volume label as part of the directory listing. If a volume serial number exists, SK-DOS displays this number as well."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&ELABEL [drive:][label]"
+                send ""
+                send "&x&C&E&C&E&C&ETo specify that SK-DOS is to display the current volume label and serial number, if they exist, and that SK-DOS is to prompt you to enter a label or delete the existing one, use the following syntax:"
+                send ""
+                send "&x&C&E&C&E&C&ELABEL"
+                send ""
+                send "&FParameters"
+                send ""
+                send "&x&C&E&C&E&C&Edrive:"
+                send "&x&C&E&C&E&C&ESpecifies the location of the disk you want to name."
+                send ""
+                send "&x&C&E&C&E&C&Elabel"
+                send "&x&C&E&C&E&C&ESpecifies the new volume label. You must include a colon (:) between drive and label."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "dir":
+                send ""
+                send "&x&C&E&C&E&C&EDIR"
+                send "&x&C&E&C&E&C&EDisplays a list of files."
+                send "&x&C&E&C&E&C&ESyntax: DIR"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "echo":
+                send "&fECHO"
+                send ""
+                send "&x&C&E&C&E&C&EDisplays or hides the text in batch programs when this program is running. Also indicates whether the command-echoing feature is on or off."
+                send ""
+                send "&x&C&E&C&E&C&EWhen you run a batch program, SK-DOS typically displays (echoes) the batch program's commands on the screen. You can turn this feature on or off by using the ECHO command."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EECHO [ON:OFF]"
+                send ""
+                send "&x&C&E&C&E&C&ETo use the echo command to display a message, use the following syntax:"
+                send ""
+                send "&x&C&E&C&E&C&Eecho [message]"
+                send ""
+                send "&fParameters"
+                send ""
+                send "&x&C&E&C&E&C&EON:OFF"
+                send "&x&C&E&C&E&C&ESpecifies whether to turn the command-echoing feature on or off. To display the current ECHO setting, use the ECHO command without a parameter."
+                send ""
+                send "&x&C&E&C&E&C&EMessage"
+                send "&x&C&E&C&E&C&ESpecifies text you want SK-DOS to display on the screen."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "edit":
+                send ""
+                send "&x&C&E&C&E&C&EEDIT"
+                send "&x&C&E&C&E&C&EStarts the SK-DOS editor."
+                send "&x&C&E&C&E&C&ESyntax: EDIT [filename]"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "exit":
+                send "&fEXIT"
+                send ""
+                send "&x&C&E&C&E&C&EQuits the SK-DOS command interpreter (COMMAND.COM) and returns to the program that started the command interpreter if one exists."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EEXIT"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "format":
+                send ""
+                send "&x&C&E&C&E&C&EFORMAT"
+                send "&x&C&E&C&E&C&EFormats a disk."
+                send "&x&C&E&C&E&C&ESyntax: FORMAT drive:"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "help":
+                send "&fHELP"
+                send ""
+                send "&x&C&E&C&E&C&EStarts SK-DOS Help."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EHELP [/B] [/G] [/H] [/NOHI] [topic]"
+                send ""
+                send "&fSwitches"
+                send ""
+                send "&x&C&E&C&E&C&E/B"
+                send "&x&C&E&C&E&C&EAllows use of a monochrome monitor with a color graphics card."
+                send ""
+                send "&x&C&E&C&E&C&E/G"
+                send "&x&C&E&C&E&C&EProvides the fastest update of a CGA screen."
+                send ""
+                send "&x&C&E&C&E&C&E/H"
+                send "&x&C&E&C&E&C&EDisplays the maximum number of lines possible for your hardware."
+                send ""
+                send "&x&C&E&C&E&C&E/NOHI"
+                send "&x&C&E&C&E&C&EAllows the use of a monitor without high-intensity support."
+                send ""
+                send "&fParameter"
+                send ""
+                send "&x&C&E&C&E&C&Etopic"
+                send "&x&C&E&C&E&C&ESpecifies the command whose help topic you want to display."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "mem":
+                send "&fMEM"
+                send ""
+                send "&x&C&E&C&E&C&EDisplays the amount of used and free memory on your computer."
+                send ""
+                send "&x&C&E&C&E&C&EYou can use the MEM command to display information about"
+                send "&x&C&E&C&E&C&Eallocated memory areas, free memory areas, and programs that are currently loaded into memory."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EMEM [/CLASSIFY:/DEBUG:/FREE:/MODULE modulename] [/PAGE]"
+                send ""
+                send "&x&C&E&C&E&C&ETo display the status of your computers used and free memory, use the following syntax:"
+                send ""
+                send "&x&C&E&C&E&C&EMEM"
+                send ""
+                send "&fSwitches"
+                send ""
+                send "&x&C&E&C&E&C&E/CLASSIFY"
+                send "&x&C&E&C&E&C&ELists loaded programs and memory usage."
+                send "&x&C&E&C&E&C&EShows total use and largest free blocks."
+                send "&x&C&E&C&E&C&EUsable with /PAGE only. Abbreviated as /C."
+                send ""
+                send "&x&C&E&C&E&C&E/DEBUG"
+                send "&x&C&E&C&E&C&ELists drivers and modules with size and type."
+                send "&x&C&E&C&E&C&EHelpful for debugging and analysis."
+                send "&x&C&E&C&E&C&EUsable with /PAGE only. Abbreviated as /D."
+
+             
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "mkdir" or "md":
+                send "&fMKDIR (MD)"
+                send ""
+                send "&x&C&E&C&E&C&ECreates a directory."
+                send ""
+                send "&x&C&E&C&E&C&EYou can use the MKDIR or MD command to create a multilevel directory structure."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EMKDIR [drive:]path"
+                send "&x&C&E&C&E&C&EMD [drive:]path"
+                send ""
+                send "&fParameters"
+                send ""
+                send "&x&C&E&C&E&C&Edrive:"
+                send "&x&C&E&C&E&C&ESpecifies the drive on which you want to create the new directory."
+                send "&x&C&E&C&E&C&Epath"
+                send "&x&C&E&C&E&C&ESpecifies the name and location of the new directory. The maximum length of any single path from the root directory to the new directory is 63 characters, including backslashes (\)."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "pause":
+                send "&fPAUSE"
+                send ""
+                send "&x&C&E&C&E&C&ESuspends processing of a batch program and displays a message that prompts the user to press any key to continue. You can use this command only within batch programs."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EPAUSE"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "rmdir":
+                send "&fRMDIR (RD)"
+                send ""
+                send "&x&C&E&C&E&C&EDeletes (removes) a directory."
+                send ""
+                send "&x&C&E&C&E&C&EBefore you can delete a directory, you must delete its files and subdirectories. The directory must be empty except for the '.' and '..' symbols."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&ERMDIR [drive:]path"
+                send "&x&C&E&C&E&C&ERD [drive:]path"
+                send ""
+                send "&fParameter"
+                send ""
+                send "&x&C&E&C&E&C&E[drive:]path"
+                send "&x&C&E&C&E&C&ESpecifies the location and name of the directory you want to delete."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "tree":
+                send "&fTREE"
+                send ""
+                send "&x&C&E&C&E&C&EGraphically displays the structure of a directory."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&ETREE [drive:][path] [/F] [/A]"
+                send ""
+                send "&fParameters"
+                send ""
+                send "&x&C&E&C&E&C&Edrive:"
+                send "&x&C&E&C&E&C&ESpecifies the drive that contains the disk for which you want to display the directory structure."
+                send ""
+                send "&x&C&E&C&E&C&Epath"
+                send "&x&C&E&C&E&C&ESpecifies the directory for which you want to display the directory structure."
+                send ""
+                send "&fSwitches"
+                send ""
+                send "&x&C&E&C&E&C&E/F"
+                send "&x&C&E&C&E&C&EDisplays the names of the files in each directory."
+                send ""
+                send "&x&C&E&C&E&C&E/A"
+                send "&x&C&E&C&E&C&ESpecifies that TREE is to use text characters instead of graphic characters to show the lines linking subdirectories. Use this switch with code pages that do not support graphic characters and to send output to printers that don't properly interpret the graphic characters."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "ver":
+                send "&fVER"
+                send ""
+                send "&x&C&E&C&E&C&EDisplays the SK-DOS version number."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EVER"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "vol":
+                send "&fVOL"
+                send ""
+                send "&x&C&E&C&E&C&EDisplays the disk volume label and serial number, if the disk has them."
+                send ""
+                send "&fSyntax"
+                send ""
+                send "&x&C&E&C&E&C&EVOL [drive:]"
+                send ""
+                send "&fParameters"
+                send ""
+                send "&x&C&E&C&E&C&Edrive:"
+                send "&x&C&E&C&E&C&ESpecifies the drive that contains the disk for which you want to display the volume label and serial number"
+                send ""
+            else:
+                send "&x&C&E&C&E&C&EMatch not found"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+        else if message is "a:" or "A:":
+            set {cmdpath::%player%} to "&x&C&E&C&E&C&EA:\"
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message is "b:" or "B:":
+            set {cmdpath::%player%} to "&x&C&E&C&E&C&EB:\"
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message is "c:" or "C:":
+            set {cmdpath::%player%} to "&x&C&E&C&E&C&EC:\"
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message is "date":
+            import:
+                java.util.Date
+                java.text.SimpleDateFormat
+
+            set {_now} to new Date()
+            set {_dayFormat} to new SimpleDateFormat("EEE")
+            set {_dateFormat} to new SimpleDateFormat("MM-dd-yyyy")
+
+            set {_day} to {_dayFormat}.format({_now})
+            set {_datestr} to {_dateFormat}.format({_now})
+
+            send ""
+            send "&x&C&E&C&E&C&ECurrent date is %{_day}% %{_datestr}%"
+            send "&x&C&E&C&E&C&EEnter new date (mm-dd-yy)"
+
+        else if message is "time":
+            import:
+                java.util.Date
+                java.text.SimpleDateFormat
+
+            set {_now} to new Date()
+
+            # Format time up to seconds with AM/PM
+            set {_timeFormat} to new SimpleDateFormat("h:mm:ss a")
+            set {_timeStr} to {_timeFormat}.format({_now})
+
+            # Format milliseconds as 3 digits
+            set {_msFormat} to new SimpleDateFormat("SSS")
+            set {_ms} to {_msFormat}.format({_now})
+
+            # Take first two digits of milliseconds for hundredths of a second
+            set {_hundredths} to substring of {_ms} from 0 to 2
+
+            # Lowercase the AM/PM and remove the space before it
+            replace all "AM" in {_timeStr} with "a"
+            replace all "PM" in {_timeStr} with "p"
+            replace all " " in {_timeStr} with ""
+
+            # Combine time + "." + hundredths + am/pm suffix
+            # Example: "7:21:49" + "." + "64" + "p" → "7:21:49.64p"
+            set {_hourMinSec} to substring of {_timeStr} from 0 to (length of {_timeStr} - 1)
+            set {_ampm} to last character of {_timeStr}
+            set {_finalTime} to "%{_hourMinSec}%.%{_hundredths}%%{_ampm}%"
+
+            send ""
+            send "&x&C&E&C&E&C&ECurrent time is  %{_finalTime}%"
+            send "&x&C&E&C&E&C&EEnter new time:"
+
+
+
+        else if message is "format":
+            set {_args::*} to message split at " "
+            if {_args::2} is set:
+                if {_args::2} is "A:" or {_args::2} is "a:":
+                    send "Drive A error. No diskette drive detected"
+                    send "No drives ready for formatting"
+                    send "%{cmdpath::%player%}%>"
+                else if {_args::2} is "C:" or {_args::2} is "c:":
+                    send "&x&C&E&C&E&C&ECannot format C: - system files in use"
+                    send "&x&C&E&C&E&C&EFormat terminated"
+                    send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                else:
+                    send "&x&C&E&C&E&C&EInvalid drive specification"
+                    send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else:
+                send "&x&C&E&C&E&C&ERequired parameter missing - "
+                send ""
+                send "%{cmdpath::%player%}%>"
+        else if message starts with "mkdir" or "md":
+            set {_args::*} to message split at " "
+            if {_args::2} is not set:
+                send "&x&C&E&C&E&C&ERequired parameter missing"
+                send ""
+                send "%{cmdpath::%player%}%>"
+            else if {_args::2} matches "(?i)^(con|prn|aux|nul|com[1-9]|lpt[1-9])$":
+                send "&x&C&E&C&E&C&EUnable to create directory"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else:
+                # Initialize folder list if not exists
+                if {folders::%player%} is not set:
+                    set {folders::%player%} to ""
+                
+                # Get current clean path and remove trailing backslash if exists
+                set {_currentpath} to {cmdpath::%player%}
+                replace all "&x&C&E&C&E&C&E" in {_currentpath} with ""
+                if {_currentpath} ends with "\":
+                    set {_currentpath} to substring of {_currentpath} from 0 to length of {_currentpath}-1
+                
+                # Create new folder path without double backslashes
+                set {_newfolder} to "%{_currentpath}%\%{_args::2}%"
+                
+                # Add to folder list
+                if {folders::%player%} is "":
+                    set {folders::%player%} to "%{_newfolder}%"
+                else:
+                    set {folders::%player%} to "%{folders::%player%}%,%{_newfolder}%"
+                
+                send ""
+                send "%{cmdpath::%player%}%>"
+
+        else if message is "debug":
+            send "&x&C&E&C&E&C&E│         DEBUG INFORMATION           "
+            send "&x&C&E&C&E&C&E│ Current Path: %{cmdpath::%player%}%"
+            
+            # Display all created folders
+            send "&x&C&E&C&E&C&E│ "
+            send "&x&C&E&C&E&C&E│ CREATED FOLDERS:"
+            if {folders::%player%} is not set:
+                send "&x&C&E&C&E&C&E│ No folders created"
+            else:
+                set {_count} to 1
+                loop {folders::%player%} split at ",":
+                    send "&x&C&E&C&E&C&E│ %{_count}%. %loop-value%"
+                    add 1 to {_count}
+            
+            # Display current variables
+            send "&x&C&E&C&E&C&E│ "
+            send "&x&C&E&C&E&C&E│ VARIABLES:"
+            send "&x&C&E&C&E&C&E│ cmd::%player% = %{cmd::%player%}%"
+            send "&x&C&E&C&E&C&E│ cmdpath::%player% = %{cmdpath::%player%}%"
+            
+            # Display system information
+            send "&x&C&E&C&E&C&E│ "
+            send "&x&C&E&C&E&C&E│ SYSTEM:"
+
+            send "&x&C&E&C&E&C&E│ Time: %time%"
+            send "&x&C&E&C&E&C&E│ Player: %player%"
+            
+            send "&x&C&E&C&E&C&E└─────────────────────────────────┘"
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+        else if message contains "cd" or "chdir":
+            set {_args::*} to message split at " "
+            if size of {_args::*} is 1:  # If just "cd" was sent
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                stop
+            if {_args::2} is set:
+                if {_args::2} is ".":
+                    # Do nothing, just show current path
+                else if {_args::2} is "..":
+                    if {cmdpath::%player%} is not "C:\":
+                        set {_path} to {cmdpath::%player%}
+                        replace all "&x&C&E&C&E&C&E" in {_path} with ""
+                        if {_path} ends with "\":
+                            set {_path} to substring of {_path} from 0 to length of {_path}-1
+                        set {_lastslash} to last index of "\" in {_path}
+                        if {_lastslash} > 0:
+                            set {_newpath} to substring of {_path} from 0 to {_lastslash}
+                            if {_newpath} is "C:":
+                                set {cmdpath::%player%} to "&x&C&E&C&E&C&EC:\"
+                            else:
+                                set {cmdpath::%player%} to "&x&C&E&C&E&C&E%{_newpath}%"
+                else if {_args::2} is "\":
+                    set {cmdpath::%player%} to "&x&C&E&C&E&C&EC:\"
+                else if {_args::2} is "/?":
+                    send "&x&C&E&C&E&C&EDisplays the name of or changes the current directory."
+                    send ""
+                    send "&x&C&E&C&E&C&ECHDIR [drive:][path]"
+                    send "&x&C&E&C&E&C&ECHDIR [..]"
+                    send "&x&C&E&C&E&C&ECD [drive:][path]"
+                    send "&x&C&E&C&E&C&ECD [..]"
+                    send ""
+                    send "&x&C&E&C&E&C&E  ..  Specifies that you want to change to the parent directory."
+                    send ""
+                    send "&x&C&E&C&E&C&EType CD drive: to display the current directory in the specified drive."
+                    send "&x&C&E&C&E&C&EType CD without parameters to display the current drive and directory"
+                else:
+                    # Check standard directories first
+                    if {_args::2} is "DOS":
+                        set {cmdpath::%player%} to "&x&C&E&C&E&C&EC:\DOS"
+                    else if {_args::2} is "WINDOWS":
+                        set {cmdpath::%player%} to "&x&C&E&C&E&C&EC:\WINDOWS"
+                    else:
+                        # Get current clean path and remove trailing backslash
+                        set {_currentpath} to {cmdpath::%player%}
+                        replace all "&x&C&E&C&E&C&E" in {_currentpath} with ""
+                        if {_currentpath} ends with "\":
+                            set {_currentpath} to substring of {_currentpath} from 0 to length of {_currentpath}-1
+                        
+                        # Build target path without double backslashes
+                        set {_target} to "%{_currentpath}%\%{_args::2}%"
+                        set {_folderfound} to false
+                        
+                        # Check if folder exists
+                        if {folders::%player%} is set:
+                            loop {folders::%player%} split at ",":
+                                set {_storedpath} to loop-value
+                                if {_storedpath} is {_target}:
+                                    set {_folderfound} to true
+                                    break
+                        
+                        if {_folderfound} is true:
+                            # Set new path with proper formatting and no double backslashes
+                            set {cmdpath::%player%} to "&x&C&E&C&E&C&E%{_target}%"
+                        else:
+                            send "&x&C&E&C&E&C&EInvalid directory"
+                            send ""
+                            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                            stop
+            send ""
+            send "%{cmdpath::%player%}%>"
+        else if message starts with "rmdir" or "rd":
+            set {_args::*} to message split at " "
+            if {_args::2} is not set:
+                send "&x&C&E&C&E&C&ERequired parameter missing"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                stop
+            
+            # Get current clean path
+            set {_currentpath} to {cmdpath::%player%}
+            replace all "&x&C&E&C&E&C&E" in {_currentpath} with ""
+            if {_currentpath} ends with "\":
+                set {_currentpath} to substring of {_currentpath} from 0 to length of {_currentpath}-1
+            
+            # Build target directory path
+            set {_target} to "%{_currentpath}%\%{_args::2}%"
+            set {_folderfound} to false
+            set {_newfolderlist} to ""
+            
+            if {folders::%player%} is set:
+                loop {folders::%player%} split at ",":
+                    set {_storedpath} to loop-value
+                    if {_storedpath} is {_target}:
+                        set {_folderfound} to true
+                    else:
+                        if {_newfolderlist} is "":
+                            set {_newfolderlist} to "%{_storedpath}%"
+                        else:
+                            set {_newfolderlist} to "%{_newfolderlist}%,%{_storedpath}%"
+            
+            if {_folderfound} is false:
+                send "&x&C&E&C&E&C&EInvalid path, not directory,"
+                send "&x&C&E&C&E&C&Eor directory not empty"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                stop
+            
+            # Check if directory is empty
+            set {_hascontents} to false
+            if {folders::%player%} is set:
+                loop {folders::%player%} split at ",":
+                    set {_storedpath} to loop-value
+                    if {_storedpath} starts with "%{_target}%\":
+                        set {_hascontents} to true
+                        break
+            
+            if {_hascontents} is true:
+                send "&x&C&E&C&E&C&EDirectory not empty"
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                stop
+            
+            # Remove the directory
+            set {folders::%player%} to {_newfolderlist}
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message is "dir":
+            send ""
+            
+            # Handle volume label display based on current drive
+            if "%{cmdpath::%player%}%" contains "A:":
+                if {volumelabel::a:} is set:
+                    send "&x&C&E&C&E&C&E Volume in drive A is %{volumelabel::a:}%"
+                else:
+                    send "&x&C&E&C&E&C&E Volume in drive A has no label."
+                send "&x&C&E&C&E&C&E Volume Serial Number is 67E8-1190"
+            else if "%{cmdpath::%player%}%" contains "B:":
+                if {volumelabel::b:} is set:
+                    send "&x&C&E&C&E&C&E Volume in drive B is %{volumelabel::b:}%"
+                else:
+                    send "&x&C&E&C&E&C&E Volume in drive B has no label."
+                send "&x&C&E&C&E&C&E Volume Serial Number is A9B3-D0F2"
+            else:
+                if {volumelabel::c:} is set:
+                    send "&x&C&E&C&E&C&E Volume in drive C is %{volumelabel::c:}%"
+                else:
+                    send "&x&C&E&C&E&C&E Volume in drive C is SK-DOS_6"
+                send "&x&C&E&C&E&C&E Volume Serial Number is 5AAA-843B"
+
+            # Get clean current path
+            set {_cleanpath} to {cmdpath::%player%}
+            replace all "&x&C&E&C&E&C&E" in {_cleanpath} with ""
+            if {_cleanpath} ends with "\":
+                set {_cleanpath} to substring of {_cleanpath} from 0 to (length of {_cleanpath} - 0)
+
+            send "&x&C&E&C&E&C&E Directory of %{_cleanpath}%"
+            send ""
+
+            # Initialize counters
+            set {_filecount} to 0
+            set {_dircount} to 0
+            set {_totalsize} to 0
+
+            # Always show . and .. directories
+            send "&x&C&E&C&E&C&E.               <DIR>        05-10-25   1:00p"
+            send "&x&C&E&C&E&C&E..              <DIR>        05-10-25   1:00p"
+            add 2 to {_dircount}
+
+            # Show system directories and files for root directory
+            if {_cleanpath} is "C:\":
+                send "&x&C&E&C&E&C&EDOS             <DIR>        05-10-25   1:00p"
+                send "&x&C&E&C&E&C&ECOMMAND    COM       54,645  05-31-94   4:33p"
+                send "&x&C&E&C&E&C&EWINA20     386        9,349  05-31-94   4:33p"
+                send "&x&C&E&C&E&C&ECONFIG     SYS           71  05-10-25   6:22a"
+                send "&x&C&E&C&E&C&EAUTOEXEC   BAT           78  05-10-25   1:00p"
+                send "&x&C&E&C&E&C&EREADME     TXT          512  05-10-25   1:00p"
+                add 2 to {_dircount}
+                add 5 to {_filecount}
+                add 64655 to {_totalsize}
+
+            # Show system files for DOS directory
+            else if {_cleanpath} is "C:\DOS":
+                send "&x&C&E&C&E&C&EEDIT      COM       15,345  05-31-94   6:22a"
+                send "&x&C&E&C&E&C&EFORMAT    COM       12,341  05-31-94   6:22a"
+                send "&x&C&E&C&E&C&EFDISK     EXE       24,678  05-31-94   6:22a"
+                send "&x&C&E&C&E&C&EMEM       EXE       10,245  05-31-94   6:22a"
+                send "&x&C&E&C&E&C&EHELP      TXT        2,048  05-31-94   6:22a"
+                add 5 to {_filecount}
+                add 64657 to {_totalsize}
+
+            # Show user-created folders
+            if {folders::%player%} is set:
+                # Get current clean path and remove trailing backslash if exists
+                set {_currentpath} to {cmdpath::%player%}
+                replace all "&x&C&E&C&E&C&E" in {_currentpath} with ""
+                if {_currentpath} ends with "\":
+                    set {_currentpath} to substring of {_currentpath} from 0 to (length of {_currentpath} - 1)
+
+                # Check if there are any folders to display
+                set {_folderlist::*} to {folders::%player%} split at ","
+                
+                # Initialize empty list for current directory folders
+                delete {_currentdirfolders::*}
+                
+                # Validate folder data and filter for current directory
+                loop {_folderlist::*}:
+                    set {_path} to loop-value
+                    # Skip empty or invalid entries
+                    if {_path} is not "" and {_path} is set:
+                        # Normalize path separators
+                        replace all "/" in {_path} with "\"
+                        
+                        # Check if this folder is a direct child of current directory
+                        if {_path} starts with "%{_currentpath}%\":
+                            set {_remaining} to substring of {_path} from (length of {_currentpath} + 1)
+                            # Only show direct children (no subdirectories)
+                            if "\" is not in {_remaining} and {_remaining} is not "":
+                                add {_remaining} to {_currentdirfolders::*}
+                
+                # Sort folders alphabetically if any exist
+                if size of {_currentdirfolders::*} > 0:
+                    sort {_currentdirfolders::*}
+                    
+                    # Display folders with proper DOS formatting
+                    loop {_currentdirfolders::*}:
+                        set {_foldername} to loop-value
+                        # Validate folder name length to prevent display issues
+                        if length of {_foldername} > 12:
+                            set {_foldername} to substring of {_foldername} from 0 to 12
+                        
+                        # Pad folder name to 12 characters for proper alignment
+                        while length of {_foldername} < 12:
+                            set {_foldername} to "%{_foldername}% "
+                        send "&x&C&E&C&E&C&E%{folders::%player%}% <DIR>        05-10-25   1:00p"
+                        add 1 to {_dircount}
+
+            # Display summary
+            send ""
+            if {_filecount} is 1:
+                send "&x&C&E&C&E&C&E       %{_filecount}% File(s)              %{_totalsize}% bytes"
+            else:
+                send "&x&C&E&C&E&C&E       %{_filecount}% File(s)              %{_totalsize}% bytes"
+            if {_dircount} is 1:
+                send "&x&C&E&C&E&C&E       %{_dircount}% Dir(s)      1,063,993,344 bytes free"
+            else:
+                send "&x&C&E&C&E&C&E       %{_dircount}% Dir(s)      1,063,993,344 bytes free"
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message contains "mem":
+            set {_args::*} to message split at " "
+            if size of {_args::*} is 1:
+                send ""
+                send "&x&C&E&C&E&C&EMemory Type          Total        Used        Free"
+                send "&x&C&E&C&E&C&E---------------  -------   -------   --------"
+                send "&x&C&E&C&E&C&EConventional             638K         50K         588K"
+                send "&x&C&E&C&E&C&EUpper                        0K          0K            0K"
+                send "&x&C&E&C&E&C&EReserved                   0K           0K            0K"
+                send "&x&C&E&C&E&C&EExtended (XMS)      14,208K      2,112K     12,096K"
+                send "&x&C&E&C&E&C&E---------------  -------   -------   --------"
+                send "&x&C&E&C&E&C&ETotal memory         14,846K      2,162K     65,132K"
+                send ""
+                send "&x&C&E&C&E&C&ETotal under 1 MB    638K          50K        588K"
+                send ""
+                send "&x&C&E&C&E&C&ELargest executable program size        588K (602,288 bytes)"
+                send "&x&C&E&C&E&C&ELargest free upper memory block          0K          (0 bytes)"
+                send "&x&C&E&C&E&C&ESK-DOS is resident in the high memory area."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "/?":
+                send "&x&C&E&C&E&C&EDisplays the amount of used and free memory in your system."
+                send ""
+                send "&x&C&E&C&E&C&EMEM [/CLASSIFY | /DEBUG | /FREE | /MODULE modulename] [/PAGE]"
+                send ""
+                send "&x&C&E&C&E&C&E/CLASSIFY or /C    Classifies memory used by each program."
+                send "&x&C&E&C&E&C&E/DEBUG             Displays internal memory details."
+                send "&x&C&E&C&E&C&E/FREE              Shows only available (free) memory."
+                send "&x&C&E&C&E&C&E/MODULE name       Shows memory used by a module."
+                send "&x&C&E&C&E&C&E/PAGE              Pauses when screen is full."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "/free":
+                send "&x&C&E&C&E&C&EFree Conventional Memory:"
+                send ""
+                send "&x&C&E&C&E&C&E  Segment             Total"
+                send "&x&C&E&C&E&C&E  -------   -----------------"
+                send "&x&C&E&C&E&C&E   00485                80      (0K)"
+                send "&x&C&E&C&E&C&E   0049B                96      (0K)"
+                send "&x&C&E&C&E&C&E   00BB7           88,992     (87K)"
+                send "&x&C&E&C&E&C&E   02171          516,336   (504K)"
+                send ""
+                send "&x&C&E&C&E&C&E  Total Free: 605,504       (591K)"
+                send ""
+                send "&x&C&E&C&E&C&ENo upper memory availible"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} is "/page":
+                send ""
+                send "&x&C&E&C&E&C&EMemory Type          Total    =   Used   +    Free"
+                send "&x&C&E&C&E&C&E---------------  -------   -------   --------"
+                send "&x&C&E&C&E&C&EConventional             638K         50K         588K"
+                send "&x&C&E&C&E&C&EUpper                        0K          0K            0K"
+                send "&x&C&E&C&E&C&EReserved                   0K           0K            0K"
+                send "&x&C&E&C&E&C&EExtended (XMS)      14,208K      2,112K     12,096K"
+                send "&x&C&E&C&E&C&E---------------  -------   -------   --------"
+                send "&x&C&E&C&E&C&ETotal memory         14,846K      2,162K     65,132K"
+                send ""
+                send "&x&C&E&C&E&C&ETotal under 1 MB    638K          50K        588K"
+                send ""
+                send "&x&C&E&C&E&C&ELargest executable program size        588K (602,288 bytes)"
+                send "&x&C&E&C&E&C&ELargest free upper memory block          0K          (0 bytes)"
+                send "&x&C&E&C&E&C&ESK-DOS is resident in the high memory area."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else:
+                send "&x&C&E&C&E&C&EInvalid switch -  %{_args::2}%"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message starts with "cls":
+            set {_args::*} to message split at " "
+            
+            if {_args::2} is "/?":
+                send "&x&C&E&C&E&C&EClears the screen."
+                send ""
+                send "&x&C&E&C&E&C&ECLS"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_args::2} contains "/":
+                send "&x&C&E&C&E&C&EInvalid switch"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else:
+                loop 100 times:
+                    send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message matches "(?i)[d-z]:$":
+            send "&x&C&E&C&E&C&EInvalid drive specification"
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message starts with "vol":
+            set {_args::*} to message split at " "
+            
+            if {_args::2} is "/?":
+                send "&x&C&E&C&E&C&EDisplays the disk volume label and serial number, if they exist."
+                send ""
+                send "&x&C&E&C&E&C&EVOL [drive:]"
+            else if {_args::2} is "a:":
+                if {volumelabel::a:} is set:
+                    send ""
+                    send "&x&C&E&C&E&C&E Volume in drive A is %{volumelabel::a:}%"
+                else:
+                    send ""
+                    send "&x&C&E&C&E&C&E Volume in drive A has no label."
+                send "&x&C&E&C&E&C&E Volume Serial Number is 67E8-1190"
+            else if {_args::2} is "b:":
+                if {volumelabel::b:} is set:
+                    send ""
+                    send "&x&C&E&C&E&C&E Volume in drive B is %{volumelabel::b:}%"
+                else:
+                    send ""
+                    send "&x&C&E&C&E&C&E Volume in drive B has no label."
+                send "&x&C&E&C&E&C&E Volume Serial Number is A9B3_D0F2"
+            else if {_args::2} is "c:":
+                if {volumelabel::c:} is set:
+                    send ""
+                    send "&x&C&E&C&E&C&E Volume in drive C is %{volumelabel::c:}%"
+                else:
+                    send ""
+                    send "&x&C&E&C&E&C&E Volume in drive C is SK-DOS_6"
+                send "&x&C&E&C&E&C&E Volume Serial Number is 5AAA-843B"
+            else if {_args::2} is not set:
+                if "%{cmdpath::%player%}%" contains "A:":
+                    if {volumelabel::a:} is set:
+                        send ""
+                        send "&x&C&E&C&E&C&E Volume in drive A is %{volumelabel::a:}%"
+                    else:
+                        send ""
+                        send "&x&C&E&C&E&C&E Volume in drive A has no label."
+                    send "&x&C&E&C&E&C&E Volume Serial Number is 67E8-1190"
+                else if "%{cmdpath::%player%}%" contains "B:":
+                    if {volumelabel::b:} is set:
+                        send ""
+                        send "&x&C&E&C&E&C&E Volume in drive B is %{volumelabel::b:}%"
+                    else:
+                        send ""
+                        send "&x&C&E&C&E&C&E Volume in drive B has no label."
+                    send "&x&C&E&C&E&C&E Volume Serial Number is A9B3_D0F2"
+                else:
+                    if {volumelabel::c:} is set:
+                        send ""
+                        send "&x&C&E&C&E&C&E Volume in drive C is %{volumelabel::c:}%"
+                    else:
+                        send ""
+                        send "&x&C&E&C&E&C&E Volume in drive C is SK-DOS_6"
+                    send "&x&C&E&C&E&C&E Volume Serial Number is 5AAA-843B"
+            else if {_args::2} contains "/":
+                send "&x&C&E&C&E&C&EInvalid switch -  %{_args::2}%"
+            else:
+                send "&x&C&E&C&E&C&EParameter format not correct -  %{_args::2}%"
+            
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+        else if message starts with "label ":
+            # Split the message into arguments
+            set {_args::*} to message split at " "
+            delete {_args::1} # remove the "label" part
+            set {_label} to join {_args::*} with " " # rejoin the rest as label
+
+            # Handle /? switch
+            if {_args::2} is "/?":
+                send "&x&C&E&C&E&C&ECreates, changes, or deletes the volume label of a disk."
+                send ""
+                send "&x&C&E&C&E&C&ELABEL [drive:][label]"
+                send ""
+                send "%{cmdpath::%player%}%"
+                stop
+
+            # Check if a label was provided
+            if {_label} is "":
+                send "&x&C&E&C&E&C&E You must provide a volume label."
+                stop
+
+            if length of {_label} > 11:
+                send "&x&C&E&C&E&C&EToo many characters in volume label"
+                stop
+
+            # Get player's current drive letter (a:, b:, c:)
+            if "%{cmdpath::%player%}%" contains "A:":
+                set {_drive} to "a:"
+            else if "%{cmdpath::%player%}%" contains "B:":
+                set {_drive} to "b:"
+            else if "%{cmdpath::%player%}%" contains "C:":
+                set {_drive} to "c:"
+            else:
+                send "&x&C&E&C&E&C&E Cannot determine current drive to label."
+                stop
+
+            # Set volume label
+            set {volumelabel::%{_drive}%} to {_label}
+
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+        else if message contains "tree":
+            set {_args::*} to message split at " "
+
+            if size of {_args::*} > 1:
+                if {_args::2} is "/?":
+                    send "&x&C&E&C&E&C&EGraphically displays the directory structure of a drive or path."
+                    send "&x&C&E&C&E&C&ETREE [drive:][path] [/F] [/A]"
+                    send ""
+                    send "&x&C&E&C&E&C&E/F    Displays the names of the files in each directory"
+                    send "&x&C&E&C&E&C&E/A    Uses ASCII instead of extended characters."
+                    send ""
+                    send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                    stop
+                else:
+                    send "&x&C&E&C&E&C&EInvalid switch -  %{_args::2}%"
+                    send ""
+                    send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                    stop
+
+            send "&x&C&E&C&E&C&EDirectory PATH listing for Volume SK-DOS_6"
+            send "&x&C&E&C&E&C&EVolume serial number is 5AAA-843B"
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%"
+            
+            # Get current clean path and remove trailing backslash if exists
+            set {_currentpath} to {cmdpath::%player%}
+            replace all "&x&C&E&C&E&C&E" in {_currentpath} with ""
+            if {_currentpath} ends with "\":
+                set {_currentpath} to substring of {_currentpath} from 0 to length of {_currentpath}-1
+            
+            set {_hassubfolders} to false
+            set {_userfolders::*} to {_empty::*}
+            
+            # Check for user-created folders using same logic as mkdir/dir
+            if {folders::%player%} is set:
+                set {_folderlist::*} to {folders::%player%} split at ","
+                
+                loop {_folderlist::*}:
+                    set {_path} to loop-value
+                    if {_path} is not "":
+                        # Check if this folder is a direct child of current directory
+                        if {_path} starts with "%{_currentpath}%\":
+                            set {_remaining} to substring of {_path} from (length of {_currentpath} + 2)
+                            # Only show direct children (no subdirectories)
+                            if "\" is not in {_remaining} and {_remaining} is not "":
+                                add {_remaining} to {_userfolders::*}
+                                set {_hassubfolders} to true
+            
+            # Check if we have system folders too
+            set {_hassystemfolders} to false
+            if {_currentpath} is "C:\":
+                set {_hassystemfolders} to true
+            
+            if {_hassubfolders} is true or {_hassystemfolders} is true:
+                set {_totalfolders} to 0
+                set {_currentfolder} to 0
+                
+                # Count total folders
+                if {_hassystemfolders} is true:
+                    add 2 to {_totalfolders}  # DOS and WINDOWS
+                add size of {_userfolders::*} to {_totalfolders}
+                
+                # Display system folders first
+                if {_hassystemfolders} is true:
+                    add 1 to {_currentfolder}
+                    if {_currentfolder} is {_totalfolders}:
+                        send "&x&C&E&C&E&C&E└─DOS"
+                    else:
+                        send "&x&C&E&C&E&C&E├─DOS"
+                    
+                    add 1 to {_currentfolder}
+                    if {_currentfolder} is {_totalfolders}:
+                        send "&x&C&E&C&E&C&E└─WINDOWS"
+                    else:
+                        send "&x&C&E&C&E&C&E├─WINDOWS"
+                
+                # Display user folders
+                if size of {_userfolders::*} > 0:
+                    sort {_userfolders::*}
+                    
+                    loop {_userfolders::*}:
+                        add 1 to {_currentfolder}
+                        if {_currentfolder} is {_totalfolders}:
+                            send "&x&C&E&C&E&C&E└─%loop-value%"
+                        else:
+                            send "&x&C&E&C&E&C&E├─%loop-value%"
+            else:
+                send "&x&C&E&C&E&C&ENo sub-directories exist"
+            
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+
+        else if message contains "edit":
+            set {_args::*} to message split at " "
+
+            if {_args::2} is not set:
+                send "SK-DOS Editor v0.4"
+                send "F1=Help ESC=Exit"
+                send "┌───────────────┐"
+                send "│ Survival Guide│"
+                send "├───────────────┤"
+                send "│F2=Save F3=Load│"
+                send "│F5=Cut F6=Copy │"
+                send "│F7=Paste F8=Show│"
+                send "└───────────────┘"
+                send "%{cmdpath::%player%}%>"
+
+            else if {_args::2} is "/?":
+                send "&x&C&E&C&E&C&EStarts the SK-DOS Editor, which creates and changes ASCII files."
+                send ""
+                send "&x&C&E&C&E&C&EEDIT [[drive:][path]filename] [/B] [/G] [/H] [/NOHI]"
+                send "&x&C&E&C&E&C&E[drive:][path]filename  Specifies the ASCII file to edit."
+                send "&x&C&E&C&E&C&E/B"
+                send "&x&C&E&C&E&C&EAllows use of a monochrome monitor with a color graphics card."
+                send ""
+                send "&x&C&E&C&E&C&E/G"
+                send "&x&C&E&C&E&C&EProvides the fastest update of a CGA screen."
+                send ""
+                send "&x&C&E&C&E&C&E/H"
+                send "&x&C&E&C&E&C&EDisplays the maximum number of lines possible for your hardware."
+                send ""
+                send "&x&C&E&C&E&C&E/NOHI"
+                send "&x&C&E&C&E&C&EAllows the use of a monitor without high-intensity support."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+            else if {_args::2} starts with "/":
+                send "&x&C&E&C&E&C&EInvalid switch -  %{_args::2}%"
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+            else:
+                send "Editing: %{_args::2}%"
+                wait 1 second
+                send "┌───────────────┐"
+                send "│               │"
+                send "│               │"
+                send "│               │"
+                send "│               │"
+                send "│               │"
+                send "├───────────────┤"
+                send "│ESC=Exit       │"
+                send "└───────────────┘"
+                wait until player chats ""
+                send "Save changes? (Y/N)"
+                wait until player chats
+                send "%{cmdpath::%player%}%>"
+
+        else if message starts with "command":
+            set {_args::*} to message split at " "
+            if {_args::2} is not set:
+                send ""
+                send ""
+                send "&x&C&E&C&E&C&EMicrosoft(R) MS-DOS(R) Version 6.22"
+                send "&x&C&E&C&E&C&E                (C)Copyright Microsoft Corp 1981-1994."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else:
+                send "&x&C&E&C&E&C&ESpecified COMMAND search directory bad"
+                send ""
+                send "&x&C&E&C&E&C&EMicrosoft(R) MS-DOS(R) Version 6.22"
+                send "&x&C&E&C&E&C&E                (C)Copyright Microsoft Corp 1981-1994."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message is "autoexec" or "smartdrv":
+            send ""
+            send "&x&C&E&C&E&C&EC:\DOS\SMARTDRV.EXE /X"
+            send "&x&C&E&C&E&C&EMicrosoft SMARTDrive Disk cache version 5.01"
+            send "&x&C&E&C&E&C&ECopyright 1991,1993 Microsoft Corp."
+            send ""
+            send "&x&C&E&C&E&C&ECache size:  2,097,152 bytes"
+            send "&x&C&E&C&E&C&ECache size while running Windows:  2,097,152 bytes"
+            send ""
+            send "&x&C&E&C&E&C&E               Disk Caching Status"
+            send "&x&C&E&C&E&C&Edrive   read cache   write cache   buffering"
+            send "&x&C&E&C&E&C&E─────────────────────────"
+            send "&x&C&E&C&E&C&E  A:          yes              no             no"
+            send "&x&C&E&C&E&C&E  B:          yes              no             no"
+            send "&x&C&E&C&E&C&E  C:          yes              no             no"
+            send "&x&C&E&C&E&C&EWrite behind data will be committed before command prompt returns."
+            send ""
+            send ""
+            send "&x&C&E&C&E&C&EFor help, type Smartdrv /?"
+            send "%{cmdpath::%player%}%>"
+        else if message is "batch":
+            set {_args::*} to message split at " "
+            make player say "echo --------------------------------------------------"
+            make player say "echo  Batch File: %{_args::2}%"
+            make player say "echo --------------------------------------------------"
+            make player say "echo Hello from batch script"
+        else if message starts with "echo":
+            set {_args::*} to message split at " "
+            if {_args::2} is not set:
+                send "&x&C&E&C&E&C&EECHO is on."
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+                stop
+            
+            set {_value} to lower case of {_args::2}
+            if {_value} is "off":
+                set {echo::%player%} to false
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_value} is "on":
+                set {echo::%player%} to true
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else if {_value} is ".":
+                send ""
+                send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+            else:
+                replace all "echo " in message with ""
+                set {_msg} to "&x&C&E&C&E&C&E%message%"
+                replace all "echo " in {_msg} with ""
+                send "%{_msg}%"
+                if {batch::%player%} is not true:
+                    send ""
+                    send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else if message is "mwundel" or "mwbackup" or "mwavtsr":
+            send "&x&C&E&C&E&C&EThis program requires Microsoft Windows"
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+        else:
+            send "&x&C&E&C&E&C&EBad command or file name"
+            send ""
+            send "&x&C&E&C&E&C&E%{cmdpath::%player%}%>"
+
+import:
+  java.lang.System
+  org.bukkit.Bukkit
+  java.net.URL
+  java.nio.file.Files
+  java.nio.file.Paths
+  java.io.InputStream
